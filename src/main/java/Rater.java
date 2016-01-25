@@ -1,3 +1,4 @@
+package coursera.capstone.project;
 
 /**
  * Write a description of class Rater here.
