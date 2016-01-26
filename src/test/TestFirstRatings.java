@@ -2,39 +2,43 @@ package test;
 
 import coursera.capstone.project.FirstRatings;
 import coursera.capstone.project.Movie;
+import coursera.capstone.project.Rater;
+import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.Assert.assertEquals;
 
-public class TestFirstRatings {
+public class TestFirstRatings extends TestCase {
     protected FirstRatings firstRatings;
-    protected String short_filename, long_filename;
+    protected String short_movie_filename, long_movie_filename, short_rating_filename, long_rating_filename;
     protected ArrayList<Movie> movieArrayList;
+    protected ArrayList<Rater> raterArrayList;
 
     protected void setUp() {
-        short_filename = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv";
-        long_filename = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
+        short_movie_filename = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv";
+        long_movie_filename = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
+        short_rating_filename = "/home/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
+        long_rating_filename = "/home/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
         firstRatings = new FirstRatings();
     }
 
     @Test
     public void testLoadMoviesSmallArraySize() {
-        movieArrayList = firstRatings.loadMovies(short_filename);
+        movieArrayList = firstRatings.loadMovies(short_movie_filename);
         assertEquals(5,movieArrayList.size());
     }
 
     @Test
     public void testLoadMoviesLargeArraySize() {
-        movieArrayList = firstRatings.loadMovies(long_filename);
+        movieArrayList = firstRatings.loadMovies(long_movie_filename);
         assertEquals(3143, movieArrayList.size());
     }
 
     @Test
     public void testComedyGenreInArray() {
-        movieArrayList = firstRatings.loadMovies(short_filename);
+        movieArrayList = firstRatings.loadMovies(short_movie_filename);
         int numberOfComedies = 0;
         for (Movie movie : movieArrayList) {
             if (movie.getGenres().contains("Comedy")) {
@@ -46,7 +50,7 @@ public class TestFirstRatings {
 
     @Test
     public void testMovieLengthInArray() {
-        movieArrayList = firstRatings.loadMovies(short_filename);
+        movieArrayList = firstRatings.loadMovies(short_movie_filename);
         int moviesGreaterThan150Minutes = 0;
         for (Movie movie : movieArrayList) {
             if (movie.getMinutes() > 150) {
@@ -58,11 +62,22 @@ public class TestFirstRatings {
 
     @Test
     public void testMaxNumberOfDirectors() {
-        movieArrayList = firstRatings.loadMovies(short_filename);
+        movieArrayList = firstRatings.loadMovies(short_movie_filename);
         HashMap<String, Integer> directorMap = getMapOfDirectorsToNumberOfFilms(movieArrayList);
         String biggestDirectorName = getDirectorWithMostFilms(directorMap);
         int numberOfFilms = directorMap.get(biggestDirectorName);
         assertEquals(1, numberOfFilms);
+    }
+
+    @Test
+    public void testShortRatingsFile() {
+        raterArrayList = firstRatings.loadRaters(short_rating_filename);
+        System.out.println("Total number of raters: " + raterArrayList.size());
+        for (Rater rater : raterArrayList) {
+            System.out.println("Rater ID: " + rater.getID() + "\tNumber of ratings: " + rater.numRatings());
+            System.out.println("Movie ID and rating by Rater ID: " + rater.getItemsRated());
+        }
+        assertEquals(5, raterArrayList.size());
     }
 
     private HashMap<String, Integer> getMapOfDirectorsToNumberOfFilms(ArrayList<Movie> movieList) {
