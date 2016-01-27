@@ -15,7 +15,24 @@ public class SecondRatings {
 
     public SecondRatings() {
         // default constructor
-        this("ratedmoviesfull.csv", "ratings.csv");
+        this("/home/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv",
+                "/home/greg/IdeaProjects/capstone-coursera/data/ratings.csv");
     }
+
+    public SecondRatings(String movieFile, String ratingsFile) {
+        FirstRatings firstRatings = new FirstRatings();
+        myMovies = firstRatings.loadMovies(movieFile);
+        myRaters = firstRatings.loadRaters(ratingsFile);
+    }
+
+    public int getMovieSize() {
+        return myMovies.size();
+    }
+
+    public int getRaterSize() {
+        return myRaters.size();
+    }
+
+
 
 }
