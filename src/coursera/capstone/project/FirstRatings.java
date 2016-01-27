@@ -35,16 +35,11 @@ public class FirstRatings {
         for (CSVRecord csvRecord : csvParser) {
             Rater raterFromCsvRecord = new Rater(csvRecord.get("rater_id"));
             int indexOfRater = findIndexOfRaterInArray(raterArrayList, raterFromCsvRecord);
-            //if no Rater array entries contain the "rater_id"
             if (indexOfRater == -1) {
-                //add rating in csvRecord to inner Rating array
                 raterFromCsvRecord.addRating(csvRecord.get("movie_id"), Double.parseDouble(csvRecord.get("rating")));
-                //add new rater object to raterArrayList
                 raterArrayList.add(raterFromCsvRecord);
             }
-            //we reach this point if the "rater_id" was found in the Rater array
             else {
-                //add current "movie_id" and "rating" to inner Rating array
                 Rater existingRaterInArray = raterArrayList.get(indexOfRater);
                 existingRaterInArray.addRating(csvRecord.get("movie_id"), Double.parseDouble(csvRecord.get("rating")));
             }
