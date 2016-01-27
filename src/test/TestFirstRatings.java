@@ -75,9 +75,91 @@ public class TestFirstRatings extends TestCase {
         System.out.println("Total number of raters: " + raterArrayList.size());
         for (Rater rater : raterArrayList) {
             System.out.println("Rater ID: " + rater.getID() + "\tNumber of ratings: " + rater.numRatings());
-            System.out.println("Movie ID and rating by Rater ID: " + rater.getItemsRated());
+            ArrayList<String> ratedMovieIds = rater.getItemsRated();
+            for (int index = 0; index < ratedMovieIds.size(); index++) {
+                System.out.println("Movie ID: " + ratedMovieIds.get(index) + "\tRating: " +
+                        rater.getRating(ratedMovieIds.get(index)));
+            }
         }
         assertEquals(5, raterArrayList.size());
+    }
+
+    @Test
+    public void testLongRatingsFile() {
+        raterArrayList = firstRatings.loadRaters(long_rating_filename);
+        System.out.println("Total number of raters: " + raterArrayList.size());
+        assertEquals(1048, raterArrayList.size());
+    }
+
+    @Test
+    public void testNumOfRatingsById() {
+        raterArrayList = firstRatings.loadRaters(short_rating_filename);
+        System.out.println("Getting number of ratings for rater_id=2");
+        int numRatingsForId = 0;
+        for (int index = 0; index < raterArrayList.size(); index++) {
+            if (raterArrayList.get(index).getID().contains("2")) {
+                numRatingsForId = raterArrayList.get(index).numRatings();
+            }
+        }
+        System.out.println("Number of ratings for rater_id=2: " + numRatingsForId);
+        assertEquals(3, numRatingsForId);
+    }
+
+    @Test
+    public void testMaxNumOfRatingsByAnyRater() {
+        raterArrayList = firstRatings.loadRaters(short_rating_filename);
+        int mostRatings = findMaxNumOfRatingsInArray(raterArrayList);
+        ArrayList<String> ratersWithMostRatings = new ArrayList<String>();
+        for (Rater rater : raterArrayList) {
+            if (rater.numRatings() == mostRatings) {
+                ratersWithMostRatings.add(rater.getID());
+            }
+        }
+        System.out.println("Found maximum number of ratings: " + mostRatings);
+        System.out.println("User IDs who have rated the most: " + ratersWithMostRatings);
+        assertEquals(3, mostRatings);
+    }
+
+    @Test
+    public void testNumOfRatingsByMovieId() {
+        raterArrayList = firstRatings.loadRaters(short_rating_filename);
+        String movieId = "1798709";
+        int numberOfRatingsForMovie = 0;
+        for (Rater rater : raterArrayList) {
+            ArrayList<String> ratedMovies = rater.getItemsRated();
+            if (ratedMovies.contains(movieId)) {
+                numberOfRatingsForMovie++;
+            }
+        }
+        System.out.println("Found number of ratings for movie ID (" + movieId + "): " + numberOfRatingsForMovie);
+        assertEquals(4, numberOfRatingsForMovie);
+    }
+
+    @Test
+    public void testNumOfMoviesRated() {
+        raterArrayList = firstRatings.loadRaters(short_rating_filename);
+        ArrayList<String> uniqueRatedMovieIds = new ArrayList<String>();
+        for (Rater rater : raterArrayList) {
+            ArrayList<String> ratedMovies = rater.getItemsRated();
+            for (int index = 0; index < ratedMovies.size(); index++) {
+                if (!uniqueRatedMovieIds.contains(ratedMovies.get(index))) {
+                    uniqueRatedMovieIds.add(ratedMovies.get(index));
+                }
+            }
+        }
+        System.out.println("Found " + uniqueRatedMovieIds.size() + " movies rated by all users.");
+        System.out.println("List of movie IDs that have been rated: " + uniqueRatedMovieIds);
+        assertEquals(4, uniqueRatedMovieIds.size());
+    }
+
+    private int findMaxNumOfRatingsInArray(ArrayList<Rater> raterList) {
+        int maxNumOfRatings = 0;
+        for (Rater rater : raterList) {
+            if (rater.numRatings() > maxNumOfRatings) {
+                maxNumOfRatings = rater.numRatings();
+            }
+        }
+        return maxNumOfRatings;
     }
 
     private HashMap<String, Integer> getMapOfDirectorsToNumberOfFilms(ArrayList<Movie> movieList) {

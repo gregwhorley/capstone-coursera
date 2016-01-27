@@ -29,24 +29,24 @@ public class FirstRatings {
     }
 
     public ArrayList<Rater> loadRaters(String filename) {
-        /*
-         * This method should process every record from the CSV file whose name is filename,
-         * a file of raters and their ratings, and return an ArrayList of type Rater with
-         * all the rater data from the file.
-         */
         ArrayList<Rater> raterArrayList = new ArrayList<Rater>();
         CSVParser csvParser = getParserFromFile(filename);
 
         for (CSVRecord csvRecord : csvParser) {
-            if (!raterArrayList.contains(csvRecord.get("rater_id"))) {
-                Rater rater = new Rater(csvRecord.get("rater_id"));
-                rater.addRating(csvRecord.get("movie_id"), Double.parseDouble(csvRecord.get("rating")));
-                raterArrayList.add(rater);
-            } else if (raterArrayList.contains(csvRecord.get("rater_id"))) {
-                int raterIndex = raterArrayList.indexOf(csvRecord.get("rater_id"));
-                Rater rater = raterArrayList.get(raterIndex);
-                rater.addRating(csvRecord.get("movie_id"), Double.parseDouble(csvRecord.get("rating")));
-                raterArrayList.set(raterIndex, rater);
+            Rater raterFromCsvRecord = new Rater(csvRecord.get("rater_id"));
+            int indexOfRater = findIndexOfRaterInArray(raterArrayList, raterFromCsvRecord);
+            //if no Rater array entries contain the "rater_id"
+            if (indexOfRater == -1) {
+                //add rating in csvRecord to inner Rating array
+                raterFromCsvRecord.addRating(csvRecord.get("movie_id"), Double.parseDouble(csvRecord.get("rating")));
+                //add new rater object to raterArrayList
+                raterArrayList.add(raterFromCsvRecord);
+            }
+            //we reach this point if the "rater_id" was found in the Rater array
+            else {
+                //add current "movie_id" and "rating" to inner Rating array
+                Rater existingRaterInArray = raterArrayList.get(indexOfRater);
+                existingRaterInArray.addRating(csvRecord.get("movie_id"), Double.parseDouble(csvRecord.get("rating")));
             }
         }
         return raterArrayList;
@@ -55,6 +55,16 @@ public class FirstRatings {
     private CSVParser getParserFromFile(String filename) {
         FileResource fileResource = new FileResource(filename);
         return fileResource.getCSVParser();
+    }
+
+    private int findIndexOfRaterInArray(ArrayList<Rater> raterList, Rater rater) {
+        for (int index = 0; index < raterList.size(); index++) {
+            Rater raterFromList = raterList.get(index);
+            if (raterFromList.getID().contains(rater.getID())) {
+                return index;
+            }
+        }
+        return -1;
     }
 
     public static void main(String[] args) {
