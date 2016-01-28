@@ -1,8 +1,11 @@
 package test;
 
+import coursera.capstone.project.Rating;
 import coursera.capstone.project.SecondRatings;
 import junit.framework.TestCase;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 /**
  * Created by greg on 1/27/16.
@@ -25,5 +28,13 @@ public class TestSecondRatings extends TestCase {
         System.out.println("Number of raters loaded from file: " + secondRatings.getRaterSize());
         assertEquals(5, secondRatings.getMovieSize());
         assertEquals(5, secondRatings.getRaterSize());
+    }
+
+    @Test
+    public void testGetAverageRatings() {
+        secondRatings = new SecondRatings(short_movie_filename, short_rating_filename);
+        String validMovieId = "0068646";
+        int minimalRatings = 4;
+        ArrayList<Rating> ratingArrayList = secondRatings.getAverageRatings(minimalRatings);
     }
 }
