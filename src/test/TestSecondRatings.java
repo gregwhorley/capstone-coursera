@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertEquals;
 
-
-
 /**
  * Created by greg on 1/27/16.
  */
@@ -68,6 +66,24 @@ public class TestSecondRatings {
         System.out.println("Return value for valid movie ID and invalid rating threshold should be 0.0" +
                 " - actual value: " + averageRating);
         assertEquals(0.0, averageRating);
+    }
+
+    @Test
+    public void testGetTitle() {
+        secondRatings = new SecondRatings(short_movie_filename, short_rating_filename);
+        String validMovieId = "0068646";
+        String movieTitle = secondRatings.getTitle(validMovieId);
+        System.out.println("Movie title for ID (" + validMovieId + ") is: " + movieTitle);
+        assertEquals("The Godfather", movieTitle);
+    }
+
+    @Test
+    public void testGetTitleWithInvalidId() {
+        secondRatings = new SecondRatings(short_movie_filename, short_rating_filename);
+        String invalidMovieId = "123456";
+        String movieTitle = secondRatings.getTitle(invalidMovieId);
+        System.out.println("Invalid movie ID should return ID not found! - actual: " + movieTitle);
+        assertEquals("ID not found! " + invalidMovieId, movieTitle);
     }
 
     private double getRatingForMovieId(ArrayList<Rating> ratingArrayList, String movieId) {

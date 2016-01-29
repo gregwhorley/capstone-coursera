@@ -33,6 +33,15 @@ public class SecondRatings {
         return myRaters.size();
     }
 
+    public String getTitle(String movieId) {
+        for (Movie movie : myMovies) {
+            if (movie.getID().contains(movieId)) {
+                return movie.getTitle();
+            }
+        }
+        return "ID not found! " + movieId;
+    }
+
     private double getAverageByID(String movieId, int minimalRaters) {
         double totalRatings = 0.0;
         int numberOfRatings = 0;
