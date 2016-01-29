@@ -3,20 +3,23 @@ package test;
 import coursera.capstone.project.FirstRatings;
 import coursera.capstone.project.Movie;
 import coursera.capstone.project.Rater;
-import junit.framework.TestCase;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static junit.framework.TestCase.assertEquals;
 
-public class TestFirstRatings extends TestCase {
+
+public class TestFirstRatings {
     protected FirstRatings firstRatings;
     protected String short_movie_filename, long_movie_filename, short_rating_filename, long_rating_filename;
     protected ArrayList<Movie> movieArrayList;
     protected ArrayList<Rater> raterArrayList;
 
-    protected void setUp() {
+    @Before
+    public void setUp() {
         short_movie_filename = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv";
         long_movie_filename = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
         short_rating_filename = "/home/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
