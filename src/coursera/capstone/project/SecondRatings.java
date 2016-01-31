@@ -42,6 +42,31 @@ public class SecondRatings {
         return "ID not found! " + movieId;
     }
 
+    public ArrayList<Rating> getAverageRatings(int minimalRaters) {
+        ArrayList<Rating> ratingArrayList = new ArrayList<>();
+        ArrayList<String> ratingList = getUniqueMovieIds();
+        for (int index = 0; index < ratingList.size(); index++) {
+            double averageRating = getAverageByID(ratingList.get(index), minimalRaters);
+            if (averageRating != 0.0) {
+                ratingArrayList.add(new Rating(ratingList.get(index), averageRating));
+            }
+        }
+        return ratingArrayList;
+    }
+
+    private ArrayList<String> getUniqueMovieIds() {
+        ArrayList<String> uniqueList = new ArrayList<>();
+        for (Rater rater : myRaters) {
+            ArrayList<String> ratingList = rater.getItemsRated();
+            for (int index = 0; index < ratingList.size(); index++) {
+                if (!uniqueList.contains(ratingList.get(index))) {
+                    uniqueList.add(ratingList.get(index));
+                }
+            }
+        }
+        return uniqueList;
+    }
+
     private double getAverageByID(String movieId, int minimalRaters) {
         double totalRatings = 0.0;
         int numberOfRatings = 0;
@@ -56,19 +81,4 @@ public class SecondRatings {
         }
         return totalRatings / (double) numberOfRatings;
     }
-
-    public ArrayList<Rating> getAverageRatings(int minimalRaters) {
-        ArrayList<Rating> ratingArrayList = new ArrayList<Rating>();
-        for (Rater rater : myRaters) {
-            ArrayList<String> ratingList = rater.getItemsRated();
-            for (int index = 0; index < ratingList.size(); index++) {
-                double averageRating = getAverageByID(ratingList.get(index), minimalRaters);
-                if (averageRating != 0.0) {
-                    ratingArrayList.add(new Rating(ratingList.get(index), averageRating));
-                }
-            }
-        }
-        return ratingArrayList;
-    }
-
 }
