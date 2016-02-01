@@ -42,13 +42,22 @@ public class SecondRatings {
         return "ID not found! " + movieId;
     }
 
+    public String getID(String movieTitle) {
+        for (Movie movie : myMovies) {
+            if (movie.getTitle().contains(movieTitle)) {
+                return movie.getID();
+            }
+        }
+        return "No title found that matches: " + movieTitle;
+    }
+
     public ArrayList<Rating> getAverageRatings(int minimalRaters) {
         ArrayList<Rating> ratingArrayList = new ArrayList<>();
-        ArrayList<String> ratingList = getUniqueMovieIds();
-        for (int index = 0; index < ratingList.size(); index++) {
-            double averageRating = getAverageByID(ratingList.get(index), minimalRaters);
+        ArrayList<String> uniqueMovieIds = getUniqueMovieIds();
+        for (int index = 0; index < uniqueMovieIds.size(); index++) {
+            double averageRating = getAverageByID(uniqueMovieIds.get(index), minimalRaters);
             if (averageRating != 0.0) {
-                ratingArrayList.add(new Rating(ratingList.get(index), averageRating));
+                ratingArrayList.add(new Rating(uniqueMovieIds.get(index), averageRating));
             }
         }
         return ratingArrayList;

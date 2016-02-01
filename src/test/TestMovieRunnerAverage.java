@@ -9,6 +9,14 @@ import org.junit.Test;
 public class TestMovieRunnerAverage {
     @Test
     public void testPrintAverageRatings() {
-        MovieRunnerAverage.printAverageRatings();
+        int minimalRaters = 3;
+        MovieRunnerAverage movieRunnerAverage = new MovieRunnerAverage();
+        movieRunnerAverage.printAverageRatings(minimalRaters);
+    }
+
+    @Test
+    public void testGetAverageRatingOneMovie() {
+        MovieRunnerAverage movieRunnerAverage = new MovieRunnerAverage();
+        movieRunnerAverage.getAverageRatingOneMovie();
     }
 }

@@ -86,6 +86,24 @@ public class TestSecondRatings {
         assertEquals("ID not found! " + invalidMovieId, movieTitle);
     }
 
+    @Test
+    public void testGetId() {
+        secondRatings = new SecondRatings(short_movie_filename, short_rating_filename);
+        String validMovieTitle = "The Godfather";
+        String movieId = secondRatings.getID(validMovieTitle);
+        System.out.println("Movie ID for title (" + validMovieTitle + ") is: " + movieId);
+        assertEquals("0068646", movieId);
+    }
+
+    @Test
+    public void testGetIdWithInvalidTitle() {
+        secondRatings = new SecondRatings(short_movie_filename, short_rating_filename);
+        String invalidMovieTitle = "Greg's Big Adventure";
+        String movieId = secondRatings.getID(invalidMovieTitle);
+        System.out.println("Invalid movie title should return Title not found error - actual: " + movieId);
+        assertEquals("No title found that matches: " + invalidMovieTitle, movieId);
+    }
+
     private double getRatingForMovieId(ArrayList<Rating> ratingArrayList, String movieId) {
         for (Rating rating : ratingArrayList) {
             if (rating.getItem().contains(movieId)) {
