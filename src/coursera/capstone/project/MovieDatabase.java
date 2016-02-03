@@ -1,6 +1,8 @@
-import java.util.*;
-import org.apache.commons.csv.*;
-import edu.duke.FileResource;
+package coursera.capstone.project;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Filter;
 
 public class MovieDatabase {
     private static HashMap<String, Movie> ourMovies;

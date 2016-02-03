@@ -2,7 +2,7 @@ package test;
 
 import coursera.capstone.project.FirstRatings;
 import coursera.capstone.project.Movie;
-import coursera.capstone.project.Rater;
+import coursera.capstone.project.PlainRater;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ public class TestFirstRatings {
     protected FirstRatings firstRatings;
     protected String short_movie_filename, long_movie_filename, short_rating_filename, long_rating_filename;
     protected ArrayList<Movie> movieArrayList;
-    protected ArrayList<Rater> raterArrayList;
+    protected ArrayList<PlainRater> raterArrayList;
 
     @Before
     public void setUp() {
@@ -76,8 +76,8 @@ public class TestFirstRatings {
     public void testShortRatingsFile() {
         raterArrayList = firstRatings.loadRaters(short_rating_filename);
         System.out.println("Total number of raters: " + raterArrayList.size());
-        for (Rater rater : raterArrayList) {
-            System.out.println("Rater ID: " + rater.getID() + "\tNumber of ratings: " + rater.numRatings());
+        for (PlainRater rater : raterArrayList) {
+            System.out.println("PlainRater ID: " + rater.getID() + "\tNumber of ratings: " + rater.numRatings());
             ArrayList<String> ratedMovieIds = rater.getItemsRated();
             for (int index = 0; index < ratedMovieIds.size(); index++) {
                 System.out.println("Movie ID: " + ratedMovieIds.get(index) + "\tRating: " +
@@ -113,7 +113,7 @@ public class TestFirstRatings {
         raterArrayList = firstRatings.loadRaters(short_rating_filename);
         int mostRatings = findMaxNumOfRatingsInArray(raterArrayList);
         ArrayList<String> ratersWithMostRatings = new ArrayList<String>();
-        for (Rater rater : raterArrayList) {
+        for (PlainRater rater : raterArrayList) {
             if (rater.numRatings() == mostRatings) {
                 ratersWithMostRatings.add(rater.getID());
             }
@@ -128,7 +128,7 @@ public class TestFirstRatings {
         raterArrayList = firstRatings.loadRaters(short_rating_filename);
         String movieId = "1798709";
         int numberOfRatingsForMovie = 0;
-        for (Rater rater : raterArrayList) {
+        for (PlainRater rater : raterArrayList) {
             ArrayList<String> ratedMovies = rater.getItemsRated();
             if (ratedMovies.contains(movieId)) {
                 numberOfRatingsForMovie++;
@@ -142,7 +142,7 @@ public class TestFirstRatings {
     public void testNumOfMoviesRated() {
         raterArrayList = firstRatings.loadRaters(short_rating_filename);
         ArrayList<String> uniqueRatedMovieIds = new ArrayList<String>();
-        for (Rater rater : raterArrayList) {
+        for (PlainRater rater : raterArrayList) {
             ArrayList<String> ratedMovies = rater.getItemsRated();
             for (int index = 0; index < ratedMovies.size(); index++) {
                 if (!uniqueRatedMovieIds.contains(ratedMovies.get(index))) {
@@ -155,9 +155,9 @@ public class TestFirstRatings {
         assertEquals(4, uniqueRatedMovieIds.size());
     }
 
-    private int findMaxNumOfRatingsInArray(ArrayList<Rater> raterList) {
+    private int findMaxNumOfRatingsInArray(ArrayList<PlainRater> raterList) {
         int maxNumOfRatings = 0;
-        for (Rater rater : raterList) {
+        for (PlainRater rater : raterList) {
             if (rater.numRatings() > maxNumOfRatings) {
                 maxNumOfRatings = rater.numRatings();
             }

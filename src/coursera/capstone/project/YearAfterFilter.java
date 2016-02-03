@@ -1,3 +1,6 @@
+package coursera.capstone.project;
+
+import java.util.logging.Filter;
 
 public class YearAfterFilter implements Filter {
 	private int myYear;

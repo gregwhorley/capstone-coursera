@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class SecondRatings {
     private ArrayList<Movie> myMovies;
-    private ArrayList<Rater> myRaters;
+    private ArrayList<PlainRater> myRaters;
 
     public SecondRatings() {
         // default constructor
@@ -65,7 +65,7 @@ public class SecondRatings {
 
     private ArrayList<String> getUniqueMovieIds() {
         ArrayList<String> uniqueList = new ArrayList<>();
-        for (Rater rater : myRaters) {
+        for (PlainRater rater : myRaters) {
             ArrayList<String> ratingList = rater.getItemsRated();
             for (int index = 0; index < ratingList.size(); index++) {
                 if (!uniqueList.contains(ratingList.get(index))) {
@@ -79,7 +79,7 @@ public class SecondRatings {
     private double getAverageByID(String movieId, int minimalRaters) {
         double totalRatings = 0.0;
         int numberOfRatings = 0;
-        for (Rater rater : myRaters) {
+        for (PlainRater rater : myRaters) {
             if (rater.hasRating(movieId)) {
                 numberOfRatings++;
                 totalRatings += rater.getRating(movieId);

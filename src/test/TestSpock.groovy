@@ -2,13 +2,13 @@ package test
 
 import coursera.capstone.project.FirstRatings
 import coursera.capstone.project.Movie
-import coursera.capstone.project.Rater;
+import coursera.capstone.project.PlainRater;
 
 class SpockTestOne extends spock.lang.Specification {
     FirstRatings firstRatings
     String short_movie_filename, long_movie_filename, short_rating_filename, long_rating_filename
     ArrayList<Movie> movieArrayList
-    ArrayList<Rater> raterArrayList
+    ArrayList<PlainRater> raterArrayList
 
     def setup() {
         short_movie_filename = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv"

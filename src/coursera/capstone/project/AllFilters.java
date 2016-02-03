@@ -1,4 +1,7 @@
+package coursera.capstone.project;
+
 import java.util.ArrayList;
+import java.util.logging.Filter;
 
 public class AllFilters implements Filter {
     ArrayList<Filter> filters;
