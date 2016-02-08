@@ -28,19 +28,19 @@ public class FirstRatings {
         return movieArrayList;
     }
 
-    public ArrayList<PlainRater> loadRaters(String filename) {
-        ArrayList<PlainRater> raterArrayList = new ArrayList<PlainRater>();
+    public ArrayList<EfficientRater> loadRaters(String filename) {
+        ArrayList<EfficientRater> raterArrayList = new ArrayList<EfficientRater>();
         CSVParser csvParser = getParserFromFile(filename);
 
         for (CSVRecord csvRecord : csvParser) {
-            PlainRater raterFromCsvRecord = new PlainRater(csvRecord.get("rater_id"));
+            EfficientRater raterFromCsvRecord = new EfficientRater(csvRecord.get("rater_id"));
             int indexOfRater = findIndexOfRaterInArray(raterArrayList, raterFromCsvRecord);
             if (indexOfRater == -1) {
                 raterFromCsvRecord.addRating(csvRecord.get("movie_id"), Double.parseDouble(csvRecord.get("rating")));
                 raterArrayList.add(raterFromCsvRecord);
             }
             else {
-                PlainRater existingRaterInArray = raterArrayList.get(indexOfRater);
+                EfficientRater existingRaterInArray = raterArrayList.get(indexOfRater);
                 existingRaterInArray.addRating(csvRecord.get("movie_id"), Double.parseDouble(csvRecord.get("rating")));
             }
         }
@@ -52,9 +52,9 @@ public class FirstRatings {
         return fileResource.getCSVParser();
     }
 
-    private int findIndexOfRaterInArray(ArrayList<PlainRater> raterList, PlainRater rater) {
+    private int findIndexOfRaterInArray(ArrayList<EfficientRater> raterList, EfficientRater rater) {
         for (int index = 0; index < raterList.size(); index++) {
-            PlainRater raterFromList = raterList.get(index);
+            EfficientRater raterFromList = raterList.get(index);
             if (raterFromList.getID().contains(rater.getID())) {
                 return index;
             }

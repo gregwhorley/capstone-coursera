@@ -14,17 +14,17 @@ public class MovieRunnerAverage {
 
     public void printAverageRatings(int minimalRaters) {
         //String shortMovieCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv";
-        //String shortMovieCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv";
+        String shortMovieCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv";
         //String shortRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
-        //String shortRatingsCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
+        String shortRatingsCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
 
         //String bigMovieCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
-        String bigMovieCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
+        //String bigMovieCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
         //String bigRatingsCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
-        String bigRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
+        //String bigRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
 
-        //SecondRatings secondRatings = new SecondRatings(shortMovieCsv, shortRatingsCsv);
-        SecondRatings secondRatings = new SecondRatings(bigMovieCsv, bigRatingsCsv);
+        SecondRatings secondRatings = new SecondRatings(shortMovieCsv, shortRatingsCsv);
+        //SecondRatings secondRatings = new SecondRatings(bigMovieCsv, bigRatingsCsv);
 
         System.out.println("Number of movies loaded from file: " + secondRatings.getMovieSize());
         System.out.println("Number of raters loaded from file: " + secondRatings.getRaterSize());
@@ -39,15 +39,15 @@ public class MovieRunnerAverage {
 
     public void getAverageRatingOneMovie() {
         //String shortMovieCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv";
-        //String shortMovieCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv";
+        String shortMovieCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv";
         //String shortRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
-        //String shortRatingsCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
-        String bigMovieCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
-        String bigRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
+        String shortRatingsCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
+        //String bigMovieCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
+        //String bigRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
         //String bigRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings_file_test.csv";
 
-        //SecondRatings secondRatings = new SecondRatings(shortMovieCsv, shortRatingsCsv);
-        SecondRatings secondRatings = new SecondRatings(bigMovieCsv, bigRatingsCsv);
+        SecondRatings secondRatings = new SecondRatings(shortMovieCsv, shortRatingsCsv);
+        //SecondRatings secondRatings = new SecondRatings(bigMovieCsv, bigRatingsCsv);
 
         String movieId = secondRatings.getID("Vacation");
         ArrayList<Rating> ratingArrayList = secondRatings.getAverageRatings(1);
@@ -56,5 +56,12 @@ public class MovieRunnerAverage {
                 System.out.println(secondRatings.getTitle(movieId) + " has average rating: " + rating.getValue());
             }
         }
+    }
+
+    public static void main(String[] args) {
+        int minimalRaters = 3;
+        MovieRunnerAverage movieRunnerAverage = new MovieRunnerAverage();
+        movieRunnerAverage.printAverageRatings(minimalRaters);
+        movieRunnerAverage.getAverageRatingOneMovie();
     }
 }
