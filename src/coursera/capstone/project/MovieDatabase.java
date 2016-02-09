@@ -9,14 +9,15 @@ public class MovieDatabase {
     public static void initialize(String moviefile) {
         if (ourMovies == null) {
             ourMovies = new HashMap<String,Movie>();
-            loadMovies("data/" + moviefile);
+            //loadMovies("data/" + moviefile);
+            loadMovies(moviefile);
         }
     }
 
     private static void initialize() {
         if (ourMovies == null) {
             ourMovies = new HashMap<String,Movie>();
-            loadMovies("data/ratedmoviesfull.csv");
+            loadMovies("C:/Users/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv");
         }
     }	
 
