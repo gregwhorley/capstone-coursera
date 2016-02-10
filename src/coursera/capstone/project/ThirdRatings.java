@@ -28,18 +28,18 @@ public class ThirdRatings {
 
     public ArrayList<Rating> getAverageRatings(int minimalRaters) {
         ArrayList<Rating> ratingArrayList = new ArrayList<>();
-        ArrayList<String> movieIds = MovieDatabase.filterBy(new TrueFilter());
-        for (int index = 0; index < movieIds.size(); index++) {
-            double averageRating = getAverageByID(movieIds.get(index), minimalRaters);
+        ArrayList<String> movieIdList = MovieDatabase.filterBy(new TrueFilter());
+        for (String movieId : movieIdList) {
+            double averageRating = getAverageByID(movieId, minimalRaters);
             if (averageRating != 0.0) {
-                ratingArrayList.add(new Rating(movieIds.get(index), averageRating));
+                ratingArrayList.add(new Rating(movieId, averageRating));
             }
         }
         return ratingArrayList;
     }
 
     public ArrayList<Rating> getAverageRatingsByFilter(int minimalRaters, Filter criteriaFilter) {
-        ArrayList<Rating> ratingArrayList = new ArrayList<Rating>();
+        ArrayList<Rating> ratingArrayList = new ArrayList<>();
         ArrayList<String> movieList = MovieDatabase.filterBy(criteriaFilter);
         for (int index = 0; index < movieList.size(); index++) {
             double averageRating = getAverageByID(movieList.get(index), minimalRaters);
