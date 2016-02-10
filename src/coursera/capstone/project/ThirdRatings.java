@@ -39,12 +39,6 @@ public class ThirdRatings {
     }
 
     public ArrayList<Rating> getAverageRatingsByFilter(int minimalRaters, Filter criteriaFilter) {
-        /*
-        This method should create and return an ArrayList of type Rating of all the movies that
-        have at least minimalRaters ratings and satisfies the filter criteria. This method will
-        need to create the ArrayList of type String of movie IDs from the MovieDatabase using the
-         filterBy method before calculating those averages.
-         */
         ArrayList<Rating> ratingArrayList = new ArrayList<Rating>();
         ArrayList<String> movieList = MovieDatabase.filterBy(criteriaFilter);
         for (int index = 0; index < movieList.size(); index++) {
