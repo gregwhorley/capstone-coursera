@@ -1,9 +1,9 @@
-
+package coursera.capstone.project;
 /**
  * Write a description of RaterDatabase here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Coursera
+ * @version 1.0
  */
 
 import edu.duke.FileResource;
