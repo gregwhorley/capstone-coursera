@@ -1,6 +1,7 @@
 package coursera.capstone.project;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by greg on 2/15/2016.
@@ -53,9 +54,16 @@ public class FourthRatings {
         /*
         This method should first translate a rating from the scale 0 to 10 to the scale -5 to 5 and return
         the dot product of the ratings of movies that they both rated. This method will be called by getSimilarities.
-         */
 
-        return 0.0;
+        -Get me's first rating from the HashMap<String,Rating>
+        -Subtract the rating by -5
+        -Look for rater's rating for the same movieID
+        -If found, subtract that rating by -5
+        -Add product of me*rater to result
+         */
+        double result = 0.0;
+
+        return result;
     }
 
     private ArrayList<Rating> getSimilarities(String id) {
@@ -69,7 +77,13 @@ public class FourthRatings {
         between that rater and the rater whose ID is the parameter to getSimilarities. Be sure not to use
         the dotProduct method with parameter id and itself!
          */
-        return null;
+        ArrayList<Rating> list = new ArrayList<>();
+        Rater me = RaterDatabase.getRater(id);
+        for (Rater rater : RaterDatabase.getRaters()) {
+            // add dot_product(rater,me) to list if rater != me
+        }
+        Collections.sort(list, Collections.reverseOrder());
+        return list;
     }
 
     public ArrayList<Rating> getSimilarRatings(String id, int numSimilarRaters, int minimalRaters) {
@@ -103,4 +117,20 @@ public class FourthRatings {
          */
         return null;
     }
+
+    /*
+    public ArrayList<Rating> getRecommendations(String id, int numRaters) {
+        ArrayList<Rating> similarities = getSimilarities(id);
+        ArrayList<Rating> returnList = new ArrayList<>();
+        for (String movieID: //get movies) {
+            for (int index=0;index < ...;index++) {
+                Rating rating = returnList.get(index);
+                //use Rater id and weight in rating
+                //to update running totals
+            }
+            //add Rating for movieID to returnList
+        }
+        return returnList; //sort first
+    }
+    */
 }
