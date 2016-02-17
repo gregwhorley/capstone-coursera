@@ -2,22 +2,22 @@ package coursera.capstone.project;
 
 // An immutable passive data object (PDO) to represent the rating data
 public class Rating implements Comparable<Rating> {
-    private String movieId;
-    private double movieRating;
+    private String myId;
+    private double myRating;
 
     public Rating (String anItem, double aValue) {
-        movieId = anItem;
-        movieRating = aValue;
+        myId = anItem;
+        myRating = aValue;
     }
 
     // Returns item being rated
     public String getItem () {
-        return movieId;
+        return myId;
     }
 
     // Returns the value of this rating (as a number so it can be used in calculations)
     public double getValue () {
-        return movieRating;
+        return myRating;
     }
 
     // Returns a string of all the rating information
@@ -26,8 +26,8 @@ public class Rating implements Comparable<Rating> {
     }
 
     public int compareTo(Rating other) {
-        if (movieRating < other.movieRating) return -1;
-        if (movieRating > other.movieRating) return 1;
+        if (myRating < other.myRating) return -1;
+        if (myRating > other.myRating) return 1;
         
         return 0;
     }

@@ -2,6 +2,7 @@ package coursera.capstone.project;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by greg on 2/15/2016.
@@ -62,7 +63,11 @@ public class FourthRatings {
         -Add product of me*rater to result
          */
         double result = 0.0;
-
+        for (String movieId : me.getItemsRated()) {
+            if (rater.hasRating(movieId)) {
+                result += (me.getRating(movieId) - 5) * (rater.getRating(movieId) - 5);
+            }
+        }
         return result;
     }
 
@@ -81,6 +86,9 @@ public class FourthRatings {
         Rater me = RaterDatabase.getRater(id);
         for (Rater rater : RaterDatabase.getRaters()) {
             // add dot_product(rater,me) to list if rater != me
+            if (!me.getID().equals(rater.getID())) {
+                list.add(new Rating(id, dotProduct(me, rater)));
+            }
         }
         Collections.sort(list, Collections.reverseOrder());
         return list;
@@ -105,8 +113,30 @@ public class FourthRatings {
 
         This method returns an ArrayList of Ratings for movies and their calculated weighted ratings, in sorted order.
          */
+        ArrayList<Rating> similarities = getSimilarities(id);
+        ArrayList<Rating> returnList = new ArrayList<>();
+        ArrayList<String> movieList = MovieDatabase.filterBy(new TrueFilter());
+        for (String movieID : movieList) {
+            double weightedRating = 0.0;
+            Rater rater = RaterDatabase.getRater(id);
+            for (int index = 0; index < numSimilarRaters; index++) {
+                Rating rating = similarities.get(index);
+                //Multiply their similarity rating by the rating they gave that movie.
+                // This will emphasize those raters who are closer to the rater id, since they have
+                // greater weights
+                weightedRating += rater.getRating(movieID) * rating.getValue();
+            }
+            //The weighted average movie rating for a particular movie is the sum of these weighted average
+            // ratings divided by the total number of such ratings
 
-        return null;
+            //add Rating for movieID to returnList if movie has been those movies that have at least
+            // minimalRaters ratings from those top raters
+            if (rater.numRatings() >= minimalRaters) {
+                returnList.add(new Rating(movieID, weightedRating / (double) numSimilarRaters));
+            }
+        }
+        returnList.sort(Comparator.reverseOrder());
+        return returnList;
     }
 
     public ArrayList<Rating> getSimilarRatingsByFilter(String id, int numSimilarRaters, int minimalRaters,
@@ -115,22 +145,29 @@ public class FourthRatings {
         Is similar to the getSimilarRatings method but has one additional Filter parameter named filterCriteria
         and uses that filter to access and rate only those movies that match the filter criteria.
          */
-        return null;
-    }
-
-    /*
-    public ArrayList<Rating> getRecommendations(String id, int numRaters) {
         ArrayList<Rating> similarities = getSimilarities(id);
         ArrayList<Rating> returnList = new ArrayList<>();
-        for (String movieID: //get movies) {
-            for (int index=0;index < ...;index++) {
-                Rating rating = returnList.get(index);
-                //use Rater id and weight in rating
-                //to update running totals
+        ArrayList<String> movieList = MovieDatabase.filterBy(filterCriteria);
+        for (String movieID : movieList) {
+            double weightedRating = 0.0;
+            Rater rater = RaterDatabase.getRater(id);
+            for (int index = 0; index < numSimilarRaters; index++) {
+                Rating rating = similarities.get(index);
+                //Multiply their similarity rating by the rating they gave that movie.
+                // This will emphasize those raters who are closer to the rater id, since they have
+                // greater weights
+                weightedRating += rater.getRating(movieID) * rating.getValue();
             }
-            //add Rating for movieID to returnList
+            //The weighted average movie rating for a particular movie is the sum of these weighted average
+            // ratings divided by the total number of such ratings
+
+            //add Rating for movieID to returnList if movie has been those movies that have at least
+            // minimalRaters ratings from those top raters
+            if (rater.numRatings() >= minimalRaters) {
+                returnList.add(new Rating(movieID, weightedRating / (double) numSimilarRaters));
+            }
         }
-        return returnList; //sort first
+        returnList.sort(Comparator.reverseOrder());
+        return returnList;
     }
-    */
 }

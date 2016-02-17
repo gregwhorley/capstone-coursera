@@ -59,6 +59,60 @@ public class MovieRunnerSimilarRatings {
         }
     }
 
+    public void printSimilarRatings() {
+        /*
+        This method creates a new FourthRatings object, reads data into the MovieDatabase and RaterDatabase,
+        and then calls getSimilarRatings for a particular rater ID, a number for the top number of similar
+        raters, and a number of minimal rateSimilarRatings, and then lists recommended movies and their
+        similarity ratings. For example, using the files ratedmoviesfull.csv and ratings.csv and the rater
+        ID 65, the number of minimal raters 5, and the number of top similar raters set to 20, the movie
+        returned with the top rated average is “The Fault in Our Stars”.
+         */
+    }
+
+    public void printSimilarRatingsByGenre() {
+        /*
+        This method is similar to printSimilarRatings but also uses a genre filter and then lists recommended
+        movies and their similarity ratings, and for each movie prints the movie and its similarity rating on
+        one line and its genres on a separate line below it. For example, using the files ratedmoviesfull.csv
+        and ratings.csv, the genre “Action”, the rater ID 65, the number of minimal raters set to 5, and the
+        number of top similar raters set to 20, the movie returned with the top rated average is “Rush”.
+         */
+    }
+
+    public void printSimilarRatingsByDirector() {
+        /*
+        This method is similar to printSimilarRatings but also uses a director filter and then lists recommended
+        movies and their similarity ratings, and for each movie prints the movie and its similarity rating on one
+        line and its directors on a separate line below it. For example, using the files ratedmoviesfull.csv and
+        ratings.csv, the directors “Clint Eastwood,Sydney Pollack,David Cronenberg,Oliver Stone”, the rater ID
+        1034, the number of minimal raters set to 3, and the number of top similar raters set to 10, the movie
+        returned with the top rated average is “Unforgiven”.
+         */
+    }
+
+    public void printSimilarRatingsByGenreAndMinutes() {
+        /*
+        This method is similar to printSimilarRatings but also uses a genre filter and a minutes filter and
+        then lists recommended movies and their similarity ratings, and for each movie prints the movie, its
+        minutes, and its similarity rating on one line and its genres on a separate line below it. For example,
+        using the files ratedmoviesfull.csv and ratings.csv, the genre “Adventure”, minutes between 100 and 200
+        inclusive, the rater ID 65, the number of minimal raters set to 5, and the number of top similar raters
+        set to 10, the movie returned with the top rated average is “Interstellar”.
+         */
+    }
+
+    public void printSimilarRatingsByYearAfterAndMinutes() {
+        /*
+        This method is similar to printSimilarRatings but also uses a year-after filter and a minutes filter
+        and then lists recommended movies and their similarity ratings, and for each movie prints the movie,
+        its year, its minutes, and its similarity rating on one line. For example, using the files
+        ratedmoviesfull.csv and ratings.csv, the year 2000, minutes between 80 and 100 inclusive, the rater
+        ID 65, the number of minimal raters set to 5, and the number of top similar raters set to 10, the movie
+        returned with the top rated average is “The Grand Budapest Hotel”.
+         */
+    }
+
     public static void main(String[] args) {
         MovieRunnerSimilarRatings movieRunnerSimilarRatings = new MovieRunnerSimilarRatings();
         int minimalRaters = 30;
