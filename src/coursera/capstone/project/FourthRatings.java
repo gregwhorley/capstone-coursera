@@ -132,7 +132,7 @@ public class FourthRatings {
             //add Rating for movieID to returnList if movie has been those movies that have at least
             // minimalRaters ratings from those top raters
             if (rater.numRatings() >= minimalRaters) {
-                returnList.add(new Rating(movieID, weightedRating / (double) numSimilarRaters));
+                returnList.add(new Rating(MovieDatabase.getTitle(movieID), weightedRating / (double) numSimilarRaters));
             }
         }
         returnList.sort(Comparator.reverseOrder());

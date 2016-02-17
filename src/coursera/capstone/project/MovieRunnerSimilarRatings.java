@@ -8,8 +8,9 @@ import java.util.Comparator;
  */
 public class MovieRunnerSimilarRatings {
     private String shortMovieCsv, shortRatingsCsv, bigMovieCsv, bigRatingsCsv;
-    FourthRatings fourthRatings;
-    ArrayList<Rating> ratingArrayList;
+    private FourthRatings fourthRatings;
+    private ArrayList<Rating> ratingArrayList;
+    private AllFilters filterList;
 
     public MovieRunnerSimilarRatings() {
         //shortMovieCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv";
@@ -17,22 +18,22 @@ public class MovieRunnerSimilarRatings {
         //shortRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
         //shortRatingsCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
 
-        bigMovieCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
-        //bigMovieCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
-        bigRatingsCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
-        //bigRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
+        //bigMovieCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
+        bigMovieCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
+        //bigRatingsCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
+        bigRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
 
         //MovieDatabase.initialize(shortMovieCsv);
         MovieDatabase.initialize(bigMovieCsv);
         RaterDatabase.initialize(bigRatingsCsv);
         fourthRatings = new FourthRatings();
+        System.out.println("Number of movies loaded from file: " + MovieDatabase.size());
+        System.out.println("Number of raters loaded from file: " + RaterDatabase.size());
+        filterList = new AllFilters();
     }
 
 
     public void printAverageRatings(int minimalRaters) {
-        System.out.println("Number of movies loaded from file: " + MovieDatabase.size());
-        System.out.println("Number of raters loaded from file: " + RaterDatabase.size());
-
         ratingArrayList = fourthRatings.getAverageRatings(minimalRaters);
         ratingArrayList.sort(Comparator.naturalOrder());
         System.out.println("Total of movies with at least " + minimalRaters + " raters: " + ratingArrayList.size());
@@ -42,9 +43,6 @@ public class MovieRunnerSimilarRatings {
     }
 
     public void printAverageRatingsByYearAfterAndGenre(int minimalRaters, int year, String genre) {
-        System.out.println("Number of movies loaded from file: " + MovieDatabase.size());
-        System.out.println("Number of raters loaded from file: " + RaterDatabase.size());
-        AllFilters filterList = new AllFilters();
         filterList.addFilter(new YearAfterFilter(year));
         filterList.addFilter(new GenreFilter(genre));
         ratingArrayList = fourthRatings.getAverageRatingsByFilter(minimalRaters, filterList);
@@ -59,7 +57,7 @@ public class MovieRunnerSimilarRatings {
         }
     }
 
-    public void printSimilarRatings() {
+    public void printSimilarRatings(String id, int numSimilarRaters, int minimalRaters) {
         /*
         This method creates a new FourthRatings object, reads data into the MovieDatabase and RaterDatabase,
         and then calls getSimilarRatings for a particular rater ID, a number for the top number of similar
@@ -68,6 +66,12 @@ public class MovieRunnerSimilarRatings {
         ID 65, the number of minimal raters 5, and the number of top similar raters set to 20, the movie
         returned with the top rated average is “The Fault in Our Stars”.
          */
+
+        ArrayList<Rating> similarRatings = fourthRatings.getSimilarRatings(id, numSimilarRaters, minimalRaters);
+        for (Rating rating : similarRatings) {
+            System.out.println(rating);
+        }
+
     }
 
     public void printSimilarRatingsByGenre() {
@@ -115,13 +119,16 @@ public class MovieRunnerSimilarRatings {
 
     public static void main(String[] args) {
         MovieRunnerSimilarRatings movieRunnerSimilarRatings = new MovieRunnerSimilarRatings();
-        int minimalRaters = 30;
+        int minimalRaters = 5;
         int year = 1990;
         String genre = "Drama";
         int minMinutes = 90;
         int maxMinutes = 180;
         String director = "Clint Eastwood,Joel Coen,Tim Burton,Ron Howard,Nora Ephron,Sydney Pollack";
+        String id = "65";
+        int numSimilarRaters = 20;
         //movieRunnerSimilarRatings.printAverageRatings(minimalRaters);
-        movieRunnerSimilarRatings.printAverageRatingsByYearAfterAndGenre(minimalRaters, year, genre);
+        //movieRunnerSimilarRatings.printAverageRatingsByYearAfterAndGenre(minimalRaters, year, genre);
+        movieRunnerSimilarRatings.printSimilarRatings(id, numSimilarRaters, minimalRaters);
     }
 }
