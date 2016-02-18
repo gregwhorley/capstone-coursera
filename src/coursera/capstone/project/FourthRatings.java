@@ -52,16 +52,6 @@ public class FourthRatings {
     }
 
     private double dotProduct(Rater me, Rater rater) {
-        /*
-        This method should first translate a rating from the scale 0 to 10 to the scale -5 to 5 and return
-        the dot product of the ratings of movies that they both rated. This method will be called by getSimilarities.
-
-        -Get me's first rating from the HashMap<String,Rating>
-        -Subtract the rating by -5
-        -Look for rater's rating for the same movieID
-        -If found, subtract that rating by -5
-        -Add product of me*rater to result
-         */
         double result = 0.0;
         for (String movieId : me.getItemsRated()) {
             if (rater.hasRating(movieId)) {
@@ -169,5 +159,23 @@ public class FourthRatings {
         }
         returnList.sort(Comparator.reverseOrder());
         return returnList;
+    }
+
+    public static void main(String[] args) {
+        //String shortMovieCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv";
+        String shortMovieCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratedmovies_short.csv";
+        //String shortRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
+        String shortRatingsCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
+
+        MovieDatabase.initialize(shortMovieCsv);
+        RaterDatabase.initialize(shortRatingsCsv);
+
+        Rater rater_id_2 = RaterDatabase.getRater("2");
+        Rater rater_id_4 = RaterDatabase.getRater("4");
+
+        FourthRatings fourthRatings = new FourthRatings();
+
+        double result = fourthRatings.dotProduct(rater_id_2, rater_id_4);
+        System.out.println(result);
     }
 }

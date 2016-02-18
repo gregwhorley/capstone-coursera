@@ -18,10 +18,10 @@ public class MovieRunnerSimilarRatings {
         //shortRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
         //shortRatingsCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratings_short.csv";
 
-        //bigMovieCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
-        bigMovieCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
-        //bigRatingsCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
-        bigRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
+        bigMovieCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
+        //bigMovieCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratedmoviesfull.csv";
+        bigRatingsCsv = "C:/Users/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
+        //bigRatingsCsv = "/home/greg/IdeaProjects/capstone-coursera/data/ratings.csv";
 
         //MovieDatabase.initialize(shortMovieCsv);
         MovieDatabase.initialize(bigMovieCsv);
