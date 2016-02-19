@@ -2,7 +2,6 @@ package coursera.capstone.project;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * Created by greg on 2/15/2016.
@@ -121,22 +120,7 @@ public class FourthRatings {
         Is similar to the getSimilarRatings method but has one additional Filter parameter named filterCriteria
         and uses that filter to access and rate only those movies that match the filter criteria.
          */
-        ArrayList<Rating> similarities = getSimilarities(id);
-        ArrayList<Rating> returnList = new ArrayList<>();
-        ArrayList<String> movieList = MovieDatabase.filterBy(filterCriteria);
-        for (String movieID : movieList) {
-            double weightedRating = 0.0;
-            Rater rater = RaterDatabase.getRater(id);
-            for (int index = 0; index < numSimilarRaters; index++) {
-                Rating rating = similarities.get(index);
-                weightedRating += rater.getRating(movieID) * rating.getValue();
-            }
-            if (rater.numRatings() >= minimalRaters) {
-                returnList.add(new Rating(movieID, weightedRating / (double) numSimilarRaters));
-            }
-        }
-        returnList.sort(Comparator.reverseOrder());
-        return returnList;
+        return null;
     }
 
     public static void main(String[] args) {
