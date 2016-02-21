@@ -131,7 +131,7 @@ public class MovieRunnerWithFilters {
 
     public static void main(String[] args) {
         MovieRunnerWithFilters movieRunnerWithFilters = new MovieRunnerWithFilters();
-        int minimalRaters = 3;
+        int minimalRaters = 30;
         int year = 1990;
         String genre = "Drama";
         int minMinutes = 90;
@@ -142,7 +142,7 @@ public class MovieRunnerWithFilters {
         //movieRunnerWithFilters.printAverageRatingsByGenre(minimalRaters, genre);
         //movieRunnerWithFilters.printAverageRatingsByMinutes(minimalRaters,minMinutes,maxMinutes);
         //movieRunnerWithFilters.printAverageRatingsByDirector(minimalRaters,director);
-        //movieRunnerWithFilters.printAverageRatingsByYearAfterAndGenre(minimalRaters,year,genre);
-        movieRunnerWithFilters.printAverageRatingsByDirectorsAndMinutes(minimalRaters, director, minMinutes, maxMinutes);
+        movieRunnerWithFilters.printAverageRatingsByYearAfterAndGenre(minimalRaters, year, genre);
+        //movieRunnerWithFilters.printAverageRatingsByDirectorsAndMinutes(minimalRaters, director, minMinutes, maxMinutes);
     }
 }
