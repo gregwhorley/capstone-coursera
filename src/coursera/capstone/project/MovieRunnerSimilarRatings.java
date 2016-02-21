@@ -9,7 +9,7 @@ import java.util.Comparator;
 public class MovieRunnerSimilarRatings {
     private String shortMovieCsv, shortRatingsCsv, bigMovieCsv, bigRatingsCsv;
     private FourthRatings fourthRatings;
-    private ArrayList<Rating> ratingArrayList;
+    private ArrayList<Rating> ratingArrayList, similarRatings, similarRatingsByFilter;
     private AllFilters filterList;
 
     public MovieRunnerSimilarRatings() {
@@ -25,7 +25,9 @@ public class MovieRunnerSimilarRatings {
 
         //MovieDatabase.initialize(shortMovieCsv);
         MovieDatabase.initialize(bigMovieCsv);
+        //RaterDatabase.initialize(shortRatingsCsv);
         RaterDatabase.initialize(bigRatingsCsv);
+
         fourthRatings = new FourthRatings();
         System.out.println("Number of movies loaded from file: " + MovieDatabase.size());
         System.out.println("Number of raters loaded from file: " + RaterDatabase.size());
@@ -66,15 +68,15 @@ public class MovieRunnerSimilarRatings {
         ID 65, the number of minimal raters 5, and the number of top similar raters set to 20, the movie
         returned with the top rated average is “The Fault in Our Stars”.
          */
-
-        ArrayList<Rating> similarRatings = fourthRatings.getSimilarRatings(id, numSimilarRaters, minimalRaters);
+        similarRatings = fourthRatings.getSimilarRatings(id, numSimilarRaters, minimalRaters);
         for (Rating rating : similarRatings) {
-            System.out.println(rating);
+            System.out.println(MovieDatabase.getTitle(rating.getItem()) + " - " + rating.getValue());
         }
 
     }
 
-    public void printSimilarRatingsByGenre() {
+    public void printSimilarRatingsByGenre(String id, int numSimilarRaters, int minimalRaters,
+                                           String genre) {
         /*
         This method is similar to printSimilarRatings but also uses a genre filter and then lists recommended
         movies and their similarity ratings, and for each movie prints the movie and its similarity rating on
@@ -82,9 +84,16 @@ public class MovieRunnerSimilarRatings {
         and ratings.csv, the genre “Action”, the rater ID 65, the number of minimal raters set to 5, and the
         number of top similar raters set to 20, the movie returned with the top rated average is “Rush”.
          */
+        similarRatingsByFilter = fourthRatings.getSimilarRatingsByFilter(id, numSimilarRaters, minimalRaters,
+                new GenreFilter(genre));
+        for (Rating rating : similarRatingsByFilter) {
+            System.out.println(MovieDatabase.getTitle(rating.getItem()) + " - " + rating.getValue());
+            System.out.println(MovieDatabase.getGenres(rating.getItem()));
+        }
     }
 
-    public void printSimilarRatingsByDirector() {
+    public void printSimilarRatingsByDirector(String id, int numSimilarRaters, int minimalRaters,
+                                              String director) {
         /*
         This method is similar to printSimilarRatings but also uses a director filter and then lists recommended
         movies and their similarity ratings, and for each movie prints the movie and its similarity rating on one
@@ -93,9 +102,16 @@ public class MovieRunnerSimilarRatings {
         1034, the number of minimal raters set to 3, and the number of top similar raters set to 10, the movie
         returned with the top rated average is “Unforgiven”.
          */
+        similarRatingsByFilter = fourthRatings.getSimilarRatingsByFilter(id, numSimilarRaters, minimalRaters,
+                new DirectorsFilter(director));
+        for (Rating rating : similarRatingsByFilter) {
+            System.out.println(MovieDatabase.getTitle(rating.getItem()) + " - " + rating.getValue());
+            System.out.println(MovieDatabase.getDirector(rating.getItem()));
+        }
     }
 
-    public void printSimilarRatingsByGenreAndMinutes() {
+    public void printSimilarRatingsByGenreAndMinutes(String id, int numSimilarRaters, int minimalRaters,
+                                                     String genre, int lowMinutes, int highMinutes) {
         /*
         This method is similar to printSimilarRatings but also uses a genre filter and a minutes filter and
         then lists recommended movies and their similarity ratings, and for each movie prints the movie, its
@@ -104,9 +120,18 @@ public class MovieRunnerSimilarRatings {
         inclusive, the rater ID 65, the number of minimal raters set to 5, and the number of top similar raters
         set to 10, the movie returned with the top rated average is “Interstellar”.
          */
+        filterList.addFilter(new GenreFilter(genre));
+        filterList.addFilter(new MinutesFilter(lowMinutes, highMinutes));
+        similarRatingsByFilter = fourthRatings.getSimilarRatingsByFilter(id, numSimilarRaters, minimalRaters, filterList);
+        for (Rating rating : similarRatingsByFilter) {
+            System.out.println(MovieDatabase.getTitle(rating.getItem()) + " - " + rating.getValue());
+            System.out.println(MovieDatabase.getGenres(rating.getItem()) + " - Length: "
+                    + MovieDatabase.getMinutes(rating.getItem()));
+        }
     }
 
-    public void printSimilarRatingsByYearAfterAndMinutes() {
+    public void printSimilarRatingsByYearAfterAndMinutes(String id, int numSimilarRaters, int minimalRaters,
+                                                         int year, int lowMinutes, int highMinutes) {
         /*
         This method is similar to printSimilarRatings but also uses a year-after filter and a minutes filter
         and then lists recommended movies and their similarity ratings, and for each movie prints the movie,
@@ -115,20 +140,32 @@ public class MovieRunnerSimilarRatings {
         ID 65, the number of minimal raters set to 5, and the number of top similar raters set to 10, the movie
         returned with the top rated average is “The Grand Budapest Hotel”.
          */
+        filterList.addFilter(new YearAfterFilter(year));
+        filterList.addFilter(new MinutesFilter(lowMinutes, highMinutes));
+        similarRatingsByFilter = fourthRatings.getSimilarRatingsByFilter(id, numSimilarRaters, minimalRaters, filterList);
+        for (Rating rating : similarRatingsByFilter) {
+            System.out.println(MovieDatabase.getTitle(rating.getItem()) + " - " + rating.getValue());
+            System.out.println(MovieDatabase.getYear(rating.getItem()) + " - Length: "
+                    + MovieDatabase.getMinutes(rating.getItem()));
+        }
     }
 
     public static void main(String[] args) {
         MovieRunnerSimilarRatings movieRunnerSimilarRatings = new MovieRunnerSimilarRatings();
         int minimalRaters = 5;
-        int year = 1990;
+        int year = 1975;
         String genre = "Drama";
-        int minMinutes = 90;
-        int maxMinutes = 180;
-        String director = "Clint Eastwood,Joel Coen,Tim Burton,Ron Howard,Nora Ephron,Sydney Pollack";
-        String id = "65";
-        int numSimilarRaters = 20;
+        int minMinutes = 70;
+        int maxMinutes = 200;
+        String director = "Clint Eastwood,J.J. Abrams,Alfred Hitchcock,Sydney Pollack,David Cronenberg,Oliver Stone,Mike Leigh";
+        String id = "314";
+        int numSimilarRaters = 10;
         //movieRunnerSimilarRatings.printAverageRatings(minimalRaters);
         //movieRunnerSimilarRatings.printAverageRatingsByYearAfterAndGenre(minimalRaters, year, genre);
-        movieRunnerSimilarRatings.printSimilarRatings(id, numSimilarRaters, minimalRaters);
+        //movieRunnerSimilarRatings.printSimilarRatings(id, numSimilarRaters, minimalRaters);
+        //movieRunnerSimilarRatings.printSimilarRatingsByGenre(id,numSimilarRaters,minimalRaters,genre);
+        //movieRunnerSimilarRatings.printSimilarRatingsByDirector(id,numSimilarRaters,minimalRaters,director);
+        //movieRunnerSimilarRatings.printSimilarRatingsByGenreAndMinutes(id,numSimilarRaters,minimalRaters,genre,minMinutes,maxMinutes);
+        movieRunnerSimilarRatings.printSimilarRatingsByYearAfterAndMinutes(id, numSimilarRaters, minimalRaters, year, minMinutes, maxMinutes);
     }
 }

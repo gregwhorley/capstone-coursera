@@ -28,8 +28,7 @@ public class ThirdRatings {
 
     public ArrayList<Rating> getAverageRatings(int minimalRaters) {
         ArrayList<Rating> ratingArrayList = new ArrayList<>();
-        ArrayList<String> movieIdList = MovieDatabase.filterBy(new TrueFilter());
-        for (String movieId : movieIdList) {
+        for (String movieId : MovieDatabase.filterBy(new TrueFilter())) {
             double averageRating = getAverageByID(movieId, minimalRaters);
             if (averageRating != 0.0) {
                 ratingArrayList.add(new Rating(movieId, averageRating));
